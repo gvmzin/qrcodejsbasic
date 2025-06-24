@@ -54,4 +54,4 @@ qrcodejsbasic/
 
 - **[Ester](https://github.com/esterxy)**
 - **[Iago](https://github.com/IagoR7)**
-- **[Guimarães](https://github.com/Pedrinhodev1)**
+- **[Pedro](https://github.com/Pedrinhodev1)**
