@@ -50,3 +50,8 @@ qrcodejsbasic/
 │   └── script.js        # Script para geração, armazenamento e interação
 └── README.md            # Documentação do projeto
 ```
+# Colaboradores
+
+- **[Ester](https://github.com/esterxy)**
+- **[Iago](https://github.com/IagoR7)**
+- **[Guimarães](https://github.com/Pedrinhodev1)**
