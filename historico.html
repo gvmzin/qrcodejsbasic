@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico de QR Codes</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+  <!-- Modal de visualização do QR Code -->
+  <div id="qrModal" class="modal">
+    <span id="fecharModal" class="fechar">&times;</span>
+    <img id="imgModal" src="" alt="QR Code Ampliado">
+  </div>
+
+  <!-- Container do Histórico -->
+  <div class="historico-container">
+    <h2>Histórico de QR Codes</h2>
+    <div id="listaHistorico" class="historico-lista"></div>
+    <a href="index.html"><button class="voltar">⬅ Voltar</button></a>
+  </div>
+
+  <script>
+    const listaHistorico = document.getElementById('listaHistorico');
+    const historico = JSON.parse(localStorage.getItem('historicoQR')) || [];
+
+    const qrModal = document.getElementById('qrModal');
+    const imgModal = document.getElementById('imgModal');
+    const fecharModal = document.getElementById('fecharModal');
+
+    historico.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'card-historico';
+      card.innerHTML = `
+        <strong class="clicavel" data-index="${index}" style="cursor:pointer; color: yellow;">
+          ${item.apelido}
+        </strong><br/>
+        <img src="${item.imagem}" alt="QR Code"><br/>
+        <a href="${item.link}" target="_blank">${item.link}</a>
+      `;
+      listaHistorico.appendChild(card);
+    });
+
+    // Ao clicar no apelido, abre o modal com QR ampliado
+    listaHistorico.addEventListener('click', function(e) {
+      if (e.target.classList.contains('clicavel')) {
+        const index = e.target.getAttribute('data-index');
+        const item = historico[index];
+        imgModal.src = item.imagem;
+        qrModal.style.display = 'flex';
+      }
+    });
+
+    // Fecha o modal
+    fecharModal.addEventListener('click', () => {
+      qrModal.style.display = 'none';
+    });
+
+    // Fecha clicando fora da imagem
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) {
+        qrModal.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>

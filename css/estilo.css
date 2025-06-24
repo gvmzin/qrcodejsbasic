@@ -1,45 +1,266 @@
-body{
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: black;
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.central{
-    background: rgba(211, 182, 21, 0.164);
-    width: 400px;
-    height: 450px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    border-radius: 20%;
-    gap: 10px;
+
+.central {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  width: 800px;
+  height: 600px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 20%;
+  gap: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
-.fundo{
-    min-width: 100%;
-    height: auto;
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 20%;
+
+.fundo {
+  background-color: rgb(0, 0, 0);
+  min-width: 100%;
+  height: auto;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 20%;
 }
-.central input{
-    background: black;
-    height: 40px;
-    width: 300px;
-    border-radius: 8px;
-    border: none;
-    color: white;
+
+#botao,
+#historicoBtn {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  height: 40px;
+  border-radius: 50%;
+  width: 50px;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: 0.3s;
 }
-.central button{
-    background: black;
-    color: white;
-    height: 40px;
-    border-radius: 50%;
-    width: 50px;
-    cursor: pointer;
+
+#botao:hover,
+#historicoBtn:hover {
+  background: white;
+  color: black;
+}
+
+#botao {
+  position: absolute;
+  top: 90px;
+  left: 700px;
+}
+
+#historicoBtn {
+  position: absolute;
+  top: 45px;
+  left: 700px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#apelido,
+#url {
+  background: rgba(0, 0, 0, 0.7);
+  height: 40px;
+  width: 250px;
+  border-radius: 100px;
+  padding: 5px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  margin: 10px;
+  backdrop-filter: blur(4px);
+}
+
+#apelido {
+  position: absolute;
+  left: 80px;
+  top: 50px;
+}
+
+#url {
+  position: absolute;
+  left: 380px;
+  top: 50px;
+  color: rgb(201, 201, 201);
+}
+
+#codeqr {
+  position: inherit;
+  margin: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  position: absolute;
+  top: 50px;
+  font-size: xxx-large;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal img {
+  max-width: 80%;
+  max-height: 80%;
+  border: 5px solid white;
+  border-radius: 10px;
+}
+
+.fechar {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.historico {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  display: none;
+  z-index: 999;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.historico button {
+  background: red;
+  border: none;
+  color: white;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#listaHistorico {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+  width: 100%;
+  list-style: none;
+}
+
+#listaHistorico li {
+  margin-bottom: 15px;
+}
+
+.historico-container {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.historico-container h2 {
+  margin: 0;
+  font-size: 32px;
+  color: white;
+}
+
+.historico-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.card-historico {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 15px;
+  color: white;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card-historico:hover {
+  transform: scale(1.03);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.card-historico img {
+  width: 120px;
+  height: 120px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid white;
+}
+
+.card-historico a {
+  color: #8be9fd;
+  word-break: break-all;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.card-historico a:hover {
+  text-decoration: underline;
+}
+
+.voltar {
+  margin-top: 20px;
+  background: transparent;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.voltar:hover {
+  background: white;
+  color: black;
 }
