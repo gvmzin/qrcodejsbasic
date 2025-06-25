@@ -1,51 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QR Code Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerador de QR Code</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <link rel="stylesheet" href="css/estilo.css" />
 </head>
 <body>
-    <div class="usuario-header">
+<div class="usuario-header">
   <span id="usuarioLogado">👤 Usuário: </span>
   <button id="sairBtn">Sair</button>
 </div>
 
-    <h1>Gerador de QRCODE</h1>
-  <div class="central">
-<div class="input-group">
-  <input type="text" id="apelido" placeholder="Apelido do QR Code" />
-  <input type="text" id="url" placeholder="Link para o QR Code" />
-  <button id="botao">▶</button>
-  <a href="historico.html"><button id="historicoBtn">📜</button></a>
-</div>
 
+  <h1>Gerador de QRCODE</h1>
+  <div class="central">
+    <div class="input-group">
+      <input type="text" id="apelido" placeholder="Apelido do QR Code" />
+      <input type="text" id="url" placeholder="Link para o QR Code" />
+      <button id="botao">▶</button>
+      <a href="historico.html"><button id="historicoBtn">📜</button></a>
+    </div>
     <div id="codeqr"></div>
   </div>
+
   <script src="js/script.js"></script>
   <script>
-  const usuarioSpan = document.getElementById('usuarioLogado');
-  const sairBtn = document.getElementById('sairBtn');
+    const usuarioSpan = document.getElementById('usuarioLogado');
+    const sairBtn = document.getElementById('sairBtn');
 
-  // Verifica login
-  const logado = localStorage.getItem("logado");
-  const usuarios = Object.keys(localStorage).filter(key => key.startsWith("user:"));
+    // Verifica login
+    const logado = localStorage.getItem("logado");
+    const usuario = localStorage.getItem("usuarioLogado");
 
-  if (!logado || usuarios.length === 0) {
-    window.location.href = "index.html"; // redireciona se não estiver logado
-  } else {
-    // Exibe nome do primeiro usuário logado
-    const userKey = usuarios.find(key => localStorage.getItem("logado") === "sim");
-    const nome = userKey.replace("user:", "");
-    usuarioSpan.textContent = `👤 Usuário: ${nome}`;
-  }
+    if (logado !== "sim" || !usuario) {
+      alert("Você não está logado! Redirecionando para login.");
+      window.location.href = "login.html";
+    } else {
+      usuarioSpan.textContent = `👤 Usuário: ${usuario}`;
+    }
 
-  // Função de sair
-  sairBtn.addEventListener("click", () => {
-    localStorage.removeItem("logado");
-    window.location.href = "login.html";
+    // Função de sair
+    sairBtn.addEventListener("click", () => {
+      localStorage.removeItem("logado");
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = "login.html";
+    });
+  </script>
+  <script src="js/script.js"></script> 
+
+<script>
+  // Aguarda o DOM carregar antes de acessar elementos
+  document.addEventListener("DOMContentLoaded", function() {
+    const usuarioSpan = document.getElementById('usuarioLogado');
+    const sairBtn = document.getElementById('sairBtn');
+
+    const logado = localStorage.getItem("logado");
+    const usuario = localStorage.getItem("usuarioLogado");
+
+    if (logado !== "sim" || !usuario) {
+      alert("Você não está logado! Redirecionando para login.");
+      window.location.href = "login.html";
+      return; // evita continuar a execução
+    }
+
+    usuarioSpan.textContent = `👤 Usuário: ${usuario}`;
+
+    sairBtn.addEventListener("click", () => {
+      localStorage.removeItem("logado");
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = "login.html";
+    });
   });
 </script>
 

@@ -1,57 +1,86 @@
-# Gerador de QR Codes com Histórico e Apelidos
+# Gerador de QR Codes com Histórico, Apelidos e Sistema de Login
 
-Este projeto é uma aplicação web simples que permite gerar QR Codes a partir de links ou textos, associando um apelido para melhor organização. Além disso, mantém um histórico dos QR Codes gerados, possibilitando a visualização e ampliação deles em uma interface moderna e intuitiva.
+Esta aplicação web permite que múltiplos usuários façam cadastro/login para gerar QR Codes personalizados a partir de links ou textos, associando apelidos para organização. Cada usuário possui seu histórico próprio de QR Codes, armazenado localmente no navegador (localStorage). A interface é moderna, responsiva e conta com funcionalidades de visualização ampliada e gerenciamento de histórico.
 
-# Funcionalidades
+---
 
-* Geração de QR Code a partir de uma URL ou texto.
-* Associação de um apelido a cada QR Code gerado para identificação fácil.
-* Armazenamento do histórico completo dos QR Codes gerados no navegador (localStorage).
-* Visualização do histórico em uma tela separada, com cards bonitos e responsivos.
-* Modal para ampliar o QR Code ao clicar no apelido.
-* Opção de voltar para a tela principal a qualquer momento.
-* Layout moderno com background estilizado e design responsivo.
+## Funcionalidades
 
-# Aprendizados aplicados
+* Sistema de cadastro e login local, com armazenamento simples no localStorage.
+* Geração de QR Code a partir de URL ou texto, com associação de apelido.
+* Histórico de QR Codes separados por usuário, armazenados localmente.
+* Tela dedicada para visualizar o histórico com cards responsivos.
+* Modal para ampliar QR Code ao clicar no apelido.
+* Botão para limpar histórico do usuário logado.
+* Botão para logout.
+* Tela inicial (home) convidativa com acesso à plataforma.
+* Layout moderno com fundo estilizado e design responsivo usando Tailwind CSS e CSS customizado.
 
-* Manipulação do DOM para geração dinâmica de elementos.
-* Uso de biblioteca externa (QRCode.js) para geração dos códigos QR.
-* Armazenamento e recuperação de dados com `localStorage`.
-* Eventos para interação com o usuário (cliques, teclas).
-* Desenvolvimento de modais para visualização ampliada.
-* Aplicação de CSS moderno com flexbox, grid, filtros e transições.
-* Separação da interface em múltiplas telas HTML com navegação simples.
+---
 
-# Tecnologias utilizadas
+## Aprendizados aplicados
+
+* Manipulação avançada do DOM e gerenciamento de estado com JavaScript vanilla.
+* Implementação simples de autenticação local (login/cadastro) usando localStorage.
+* Gerenciamento de múltiplos usuários e separação do histórico por chave única no localStorage.
+* Uso da biblioteca QRCode.js para geração dos códigos QR.
+* Criação de modais interativos para ampliar imagens.
+* Desenvolvimento de layouts responsivos e agradáveis usando CSS puro e Tailwind CSS.
+* Controle de navegação entre múltiplas páginas HTML.
+
+---
+
+## Tecnologias utilizadas
 
 * Linguagem: *JavaScript* (vanilla)
-* Biblioteca QR Code: *QRCode.js* ([link](https://github.com/davidshimjs/qrcodejs))
-* Marcações: *HTML5* e *CSS3*
+* Biblioteca para QR Code: *QRCode.js* ([github.com/davidshimjs/qrcodejs](https://github.com/davidshimjs/qrcodejs))
+* Marcação: *HTML5*
+* Estilo: *CSS3* + *Tailwind CSS* (CDN)
 * Armazenamento local: *localStorage* do navegador
 
-# Como rodar o projeto
+---
+
+## Como rodar o projeto
 
 1. Clone o repositório ou baixe os arquivos.
-2. Abra o arquivo `index.html` no seu navegador favorito.
-3. Na tela principal, insira um link/texto e um apelido, clique em “Gerar”.
-4. Use o botão de histórico para visualizar e ampliar os QR Codes gerados.
-5. Os dados ficam salvos localmente no navegador, sem necessidade de backend.
+2. Abra o arquivo `index.html` (homepage), onde você poderá acessar a página de login ou cadastro.
+3. Faça seu cadastro ou login na página `login.html`.
+4. Após login, você será redirecionado para `app.html` para gerar QR Codes.
+5. No gerador, informe o link e o apelido, gere o QR Code e ele será salvo no seu histórico.
+6. Use o botão de histórico para visualizar seus QR Codes salvos, ampliá-los e gerenciar seu histórico.
+7. Utilize o botão de sair para encerrar a sessão.
+8. Os dados são salvos localmente e separados por usuário, sem necessidade de backend.
 
-# Estrutura geral
+---
+
+## Estrutura geral
 
 ```plaintext
 qrcodejsbasic/
 │
-├── index.html           # Tela principal com geração do QR Code
-├── historico.html       # Tela do histórico com visualização e modal
+├── login.html           # Tela de login e cadastro com controle de usuários
+├── index.html           # Home page convidativa para acessar a plataforma
+├── app.html             # Tela principal para gerar QR Codes (usuário logado)
+├── historico.html       # Tela para visualizar e gerenciar histórico do usuário
 ├── css/
-│   └── estilo.css       # Estilos compartilhados para as telas
+│   └── estilo.css       # Estilos compartilhados para todas as telas
 ├── js/
-│   └── script.js        # Script para geração, armazenamento e interação
-└── README.md            # Documentação do projeto
+│   └── script.js        # Script para geração, armazenamento, login e interação
+└── README.md            # Documentação atualizada do projeto
 ```
-# Colaboradores
 
-- **[Ester](https://github.com/esterxy)**
-- **[Iago](https://github.com/IagoR7)**
-- **[Pedro](https://github.com/Pedrinhodev1)**
+---
+
+## Organização do localStorage
+
+* Usuários: armazenados com chave `user:<nomeUsuario>` e valor a senha (texto simples).
+* Login ativo: flag `logado` com valor `"sim"`.
+* Histórico por usuário: armazenado com chave `historicoQR_<nomeUsuario>`, garantindo histórico separado.
+
+---
+
+## Colaboradores
+
+* **[Ester](https://github.com/esterxy)**
+* **[Iago](https://github.com/IagoR7)**
+* **[Pedro](https://github.com/Pedrinhodev1)**

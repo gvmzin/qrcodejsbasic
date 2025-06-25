@@ -1,10 +1,16 @@
-// 
 const url = document.querySelector('#url');
 const apelido = document.querySelector('#apelido');
 const botao = document.querySelector('#botao');
 const codeqr = document.querySelector('#codeqr');
 
-let historico = JSON.parse(localStorage.getItem('historicoQR')) || [];
+const usuario = localStorage.getItem("usuarioLogado");
+if (!usuario) {
+  alert("Usuário não logado! Você será redirecionado para a tela de login.");
+  window.location.href = "login.html";
+}
+
+const chaveHistorico = `historicoQR_${usuario}`;
+let historico = JSON.parse(localStorage.getItem(chaveHistorico)) || [];
 
 botao.addEventListener('click', gerador);
 url.addEventListener('keypress', function (event) {
@@ -29,7 +35,6 @@ function gerador() {
     height: 300
   });
 
-  // Espera o QR ser renderizado e salva no localStorage
   setTimeout(() => {
     const img = qrcodeContainer.querySelector('img');
     const qrImageData = img ? img.src : "";
@@ -40,12 +45,9 @@ function gerador() {
       imagem: qrImageData
     });
 
-    // Salva no localStorage
-    localStorage.setItem('historicoQR', JSON.stringify(historico));
+    localStorage.setItem(chaveHistorico, JSON.stringify(historico));
 
     apelido.value = '';
     url.value = '';
   }, 500);
 }
-localStorage.removeItem("historicoQR");
-

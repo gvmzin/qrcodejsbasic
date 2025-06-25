@@ -1,78 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Histórico de QR Codes</title>
-  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/estilo.css" />
 </head>
 <body>
   
   <!-- Modal de visualização do QR Code -->
   <div id="qrModal" class="modal">
     <span id="fecharModal" class="fechar">&times;</span>
-    <img id="imgModal" src="" alt="QR Code Ampliado">
+    <img id="imgModal" src="" alt="QR Code Ampliado" />
   </div>
 
   <!-- Container do Histórico -->
   <div class="historico-container">
     <h2>Histórico de QR Codes</h2>
-    <div id="listaHistorico" class="historico-lista"></div>
-    <a href="app.html"><button class="voltar">⬅ Voltar</button></a>
-    <button id="limparHistorico">Limpar Histórico</button>
+    <button id="btnLimparHistorico">Limpar Histórico</button>
+    <button id="btnVoltar">Voltar para Gerador</button>
+    <ul id="listaHistorico"></ul>
   </div>
 
   <script>
-    
-    const listaHistorico = document.getElementById('listaHistorico');
-    const historico = JSON.parse(localStorage.getItem('historicoQR')) || [];
+    const usuario = localStorage.getItem("usuarioLogado");
+    if (!usuario) {
+      alert("Usuário não logado! Você será redirecionado para a tela de login.");
+      window.location.href = "login.html";
+    }
 
-    const qrModal = document.getElementById('qrModal');
-    const imgModal = document.getElementById('imgModal');
-    const fecharModal = document.getElementById('fecharModal');
+    const chaveHistorico = `historicoQR_${usuario}`;
+    let historico = JSON.parse(localStorage.getItem(chaveHistorico)) || [];
 
-    historico.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.className = 'card-historico';
-      card.innerHTML = `
-        <strong class="clicavel" data-index="${index}" style="cursor:pointer; color: yellow;">
-          ${item.apelido}
-        </strong><br/>
-        <img src="${item.imagem}" alt="QR Code"><br/>
-        <a href="${item.link}" target="_blank">${item.link}</a>
-      `;
-      listaHistorico.appendChild(card);
-    });
+    const listaHistorico = document.getElementById("listaHistorico");
+    const btnLimparHistorico = document.getElementById("btnLimparHistorico");
+    const btnVoltar = document.getElementById("btnVoltar");
+    const qrModal = document.getElementById("qrModal");
+    const fecharModal = document.getElementById("fecharModal");
+    const imgModal = document.getElementById("imgModal");
 
-    // Ao clicar no apelido, abre o modal com QR ampliado
-    listaHistorico.addEventListener('click', function(e) {
-      if (e.target.classList.contains('clicavel')) {
-        const index = e.target.getAttribute('data-index');
-        const item = historico[index];
-        imgModal.src = item.imagem;
-        qrModal.style.display = 'flex';
+    function carregarHistorico() {
+      listaHistorico.innerHTML = "";
+      if (historico.length === 0) {
+        listaHistorico.innerHTML = "<li>Não há QR Codes gerados.</li>";
+        return;
+      }
+
+      historico.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${item.apelido}</strong><br/>
+          <a href="${item.link}" target="_blank">${item.link}</a><br/>
+          <img src="${item.imagem}" alt="QR Code" class="mini-qr" data-index="${index}" style="cursor:pointer; max-width: 100px; margin-top: 8px; border-radius: 8px;"/>
+        `;
+        listaHistorico.appendChild(li);
+      });
+
+      // Clique na imagem para ampliar
+      document.querySelectorAll(".mini-qr").forEach(img => {
+        img.addEventListener("click", () => {
+          const idx = img.getAttribute("data-index");
+          imgModal.src = historico[idx].imagem;
+          qrModal.style.display = "block";
+        });
+      });
+    }
+
+    btnLimparHistorico.addEventListener("click", () => {
+      if (confirm("Deseja limpar todo o histórico?")) {
+        historico = [];
+        localStorage.setItem(chaveHistorico, JSON.stringify(historico));
+        carregarHistorico();
       }
     });
 
-    // Fecha o modal
-    fecharModal.addEventListener('click', () => {
-      qrModal.style.display = 'none';
+    fecharModal.addEventListener("click", () => {
+      qrModal.style.display = "none";
     });
 
-    // Fecha clicando fora da imagem
-    qrModal.addEventListener('click', (e) => {
-      if (e.target === qrModal) {
-        qrModal.style.display = 'none';
+    btnVoltar.addEventListener("click", () => {
+      window.location.href = "app.html";
+    });
+
+    window.onclick = function(event) {
+      if (event.target === qrModal) {
+        qrModal.style.display = "none";
       }
-    });
+    };
 
+    carregarHistorico();
   </script>
 
-<script>
-  document.getElementById("limparHistorico").addEventListener("click", () => {
-    localStorage.removeItem("historicoQR");
-    alert("Histórico apagado!");
-    location.reload();
-  });
-</script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    .historico-container {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(0,0,0,0.5);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 25px;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 12px;
+    }
+    a {
+      color: #00ffc8;
+      word-break: break-all;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      background-color: #00ffc8;
+      color: #000;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #00c0a0;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 99;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .modal img {
+      display: block;
+      margin: auto;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 20px;
+    }
+    .fechar {
+      position: absolute;
+      top: 15px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
 </body>
 </html>
