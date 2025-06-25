@@ -1,24 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QR Code Generator</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <link rel="stylesheet" href="css/estilo.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de QR Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Gerador de QRCODE</h1>
-  <div class="central">
-<div class="input-group">
-  <input type="text" id="apelido" placeholder="Apelido do QR Code" />
-  <input type="text" id="url" placeholder="Link para o QR Code" />
-  <button id="botao">▶</button>
-  <a href="historico.html"><button id="historicoBtn">📜</button></a>
-</div>
+<body class="bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white min-h-screen flex flex-col">
 
-    <div id="codeqr"></div>
-  </div>
-  <script src="js/script.js"></script>
+  <!-- Header -->
+  <header class="p-6 flex justify-between items-center max-w-6xl mx-auto w-full text-white">
+    <h1 class="text-2xl font-bold">🔳 QRCodePro</h1>
+    <a href="login.html" class="text-cyan-300 hover:text-white font-medium transition">Login</a>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-grow flex items-center justify-center text-center px-4">
+    <div class="max-w-xl bg-white/5 backdrop-blur-md p-8 rounded-3xl shadow-lg">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Transforme dados em QR Codes com facilidade</h2>
+      <p class="text-gray-200 mb-8 text-lg">Rápido. Simples. Gratuito. Acesse sua conta para começar a gerar QR Codes personalizados.</p>
+      <a href="login.html" class="inline-block bg-white/10 border border-white text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-white hover:text-black transition">
+        Entrar na Plataforma
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-sm text-white/60 p-6">
+    © 2025 QRCodePro • Todos os direitos reservados
+  </footer>
+
 </body>
 </html>

@@ -1,3 +1,4 @@
+// 
 const url = document.querySelector('#url');
 const apelido = document.querySelector('#apelido');
 const botao = document.querySelector('#botao');
@@ -46,3 +47,5 @@ function gerador() {
     url.value = '';
   }, 500);
 }
+localStorage.removeItem("historicoQR");
+

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Tela de Acesso</title>
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 12px 5px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+input::placeholder {
+  color: #ccc;
+  font-weight: 300;
+}
+
+input:focus {
+  border: 1px solid #00ffc8;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+button {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1rem;
+  width: 100%;
+}
+
+button:hover {
+  background: white;
+  color: black;
+}
+
+.toggle-link {
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 15px;
+  display: inline-block;
+  transition: color 0.3s;
+}
+
+.toggle-link:hover {
+  color: #00ffc8;
+}
+.danger-button {
+  margin-top: 20px;
+  background: #ff4d4d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1rem;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.danger-button:hover {
+  background: #ff1a1a;
+  color: white;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h2 id="title">Login</h2>
+  <input id="username" placeholder="Usuário">
+  <input id="password" placeholder="Senha" type="password">
+  <button id="submit">Entrar</button>
+  <p class="toggle-link" id="toggleLink">Não tem conta? Cadastre-se</p>
+  <button id="clearLogins" class="danger-button" style="display: none;">
+</div>
+
+
+<script>
+let isLogin = true;
+
+const title = document.getElementById("title");
+const userInput = document.getElementById("username");
+const passInput = document.getElementById("password");
+const btn = document.getElementById("submit");
+const link = document.getElementById("toggleLink");
+
+link.addEventListener("click", () => {
+  isLogin = !isLogin;
+  title.textContent = isLogin ? "Login" : "Cadastro";
+  btn.textContent = isLogin ? "Entrar" : "Cadastrar";
+  link.textContent = isLogin ? "Não tem conta? Cadastre-se" : "Já tem conta? Faça login";
+});
+
+btn.addEventListener("click", () => {
+  const user = userInput.value.trim();
+  const pass = passInput.value.trim();
+  if (!user || !pass) {
+    alert("Informe usuário e senha!");
+    return;
+  }
+// Botão oculto de apagar logins
+const clearBtn = document.getElementById("clearLogins");
+
+clearBtn.addEventListener("click", () => {
+  if (confirm("Tem certeza que deseja apagar TODOS os logins cadastrados?")) {
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("user:")) {
+        localStorage.removeItem(key);
+      }
+    });
+    alert("Todos os logins foram apagados.");
+  }
+});
+
+  if(isLogin) {
+    const storedPass = localStorage.getItem(`user:${user}`);
+    if(storedPass && storedPass === pass) {
+      alert("Login feito!");
+      localStorage.setItem("logado", "sim");
+      window.location.href = "app.html"; // Sua tela principal
+    } else {
+      alert("Usuário ou senha incorretos.");
+    }
+  } else {
+    if(localStorage.getItem(`user:${user}`)) {
+      alert("Usuário já existe!");
+    } else {
+      localStorage.setItem(`user:${user}`, pass);
+      alert("Cadastro feito! Agora faça login.");
+      isLogin = true;
+      title.textContent = "Login";
+      btn.textContent = "Entrar";
+      link.textContent = "Não tem conta? Cadastre-se";
+    }
+  }
+});
+// Botão oculto
+const clearBtn = document.getElementById("clearLogins");
+
+// Mostra o botão após 5 cliques no título
+let clickCount = 0;
+title.addEventListener("click", () => {
+  clickCount++;
+  if (clickCount >= 5) {
+    clearBtn.style.display = 'block';
+    alert("Modo admin ativado: botão para apagar logins está visível.");
+    clickCount = 0; // reseta
+  }
+});
+
+// Lógica do botão de apagar
+clearBtn.addEventListener("click", () => {
+  if (confirm("Tem certeza que deseja apagar TODOS os logins cadastrados?")) {
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("user:")) {
+        localStorage.removeItem(key);
+      }
+    });
+    alert("Todos os logins foram apagados.");
+  }
+});
+
+</script>
+</body>
+</html>

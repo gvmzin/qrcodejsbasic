@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
-
+  
   <!-- Modal de visualização do QR Code -->
   <div id="qrModal" class="modal">
     <span id="fecharModal" class="fechar">&times;</span>
@@ -17,10 +17,12 @@
   <div class="historico-container">
     <h2>Histórico de QR Codes</h2>
     <div id="listaHistorico" class="historico-lista"></div>
-    <a href="index.html"><button class="voltar">⬅ Voltar</button></a>
+    <a href="app.html"><button class="voltar">⬅ Voltar</button></a>
+    <button id="limparHistorico">Limpar Histórico</button>
   </div>
 
   <script>
+    
     const listaHistorico = document.getElementById('listaHistorico');
     const historico = JSON.parse(localStorage.getItem('historicoQR')) || [];
 
@@ -62,7 +64,15 @@
         qrModal.style.display = 'none';
       }
     });
+
   </script>
 
+<script>
+  document.getElementById("limparHistorico").addEventListener("click", () => {
+    localStorage.removeItem("historicoQR");
+    alert("Histórico apagado!");
+    location.reload();
+  });
+</script>
 </body>
 </html>
