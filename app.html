@@ -12,8 +12,6 @@
   <span id="usuarioLogado">👤 Usuário: </span>
   <button id="sairBtn">Sair</button>
 </div>
-
-
   <h1>Gerador de QRCODE</h1>
   <div class="central">
     <div class="input-group">
@@ -26,30 +24,7 @@
   </div>
 
   <script src="js/script.js"></script>
-  <script>
-    const usuarioSpan = document.getElementById('usuarioLogado');
-    const sairBtn = document.getElementById('sairBtn');
-
-    // Verifica login
-    const logado = localStorage.getItem("logado");
-    const usuario = localStorage.getItem("usuarioLogado");
-
-    if (logado !== "sim" || !usuario) {
-      alert("Você não está logado! Redirecionando para login.");
-      window.location.href = "login.html";
-    } else {
-      usuarioSpan.textContent = `👤 Usuário: ${usuario}`;
-    }
-
-    // Função de sair
-    sairBtn.addEventListener("click", () => {
-      localStorage.removeItem("logado");
-      localStorage.removeItem("usuarioLogado");
-      window.location.href = "login.html";
-    });
-  </script>
-  <script src="js/script.js"></script> 
-
+  
 <script>
   // Aguarda o DOM carregar antes de acessar elementos
   document.addEventListener("DOMContentLoaded", function() {
