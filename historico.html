@@ -45,15 +45,27 @@
         return;
       }
 
-      historico.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${item.apelido}</strong><br/>
-          <a href="${item.link}" target="_blank">${item.link}</a><br/>
-          <img src="${item.imagem}" alt="QR Code" class="mini-qr" data-index="${index}" style="cursor:pointer; max-width: 100px; margin-top: 8px; border-radius: 8px;"/>
-        `;
-        listaHistorico.appendChild(li);
-      });
+    historico.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${item.apelido}</strong><br/>
+        <a href="${item.link}" target="_blank">${item.link}</a><br/>
+        <img src="${item.imagem}" alt="QR Code" class="mini-qr" data-index="${index}" style="cursor:pointer; max-width: 100px; margin-top: 8px; border-radius: 8px;"/><br/>
+        <button class="btn-deletar" data-index="${index}" style="margin-top:10px; padding: 6px 12px; border: none; border-radius: 8px; background-color: #ff4d4d; color: white; font-weight: bold; cursor: pointer;">🗑️ Remover</button>
+  `;
+  listaHistorico.appendChild(li);
+});
+document.querySelectorAll(".btn-deletar").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const idx = parseInt(btn.getAttribute("data-index"));
+    if (confirm("Deseja remover este QR Code do histórico?")) {
+      historico.splice(idx, 1); // Remove o item da lista
+      localStorage.setItem(chaveHistorico, JSON.stringify(historico)); // Salva atualizado
+      carregarHistorico(); // Recarrega a lista
+    }
+  });
+});
+
 
       // Clique na imagem para ampliar
       document.querySelectorAll(".mini-qr").forEach(img => {
@@ -105,7 +117,8 @@
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    }
+      text-align: center;
+}
     ul {
       list-style: none;
       padding: 0;
