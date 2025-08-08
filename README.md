@@ -42,7 +42,7 @@ Esta aplicação web permite que múltiplos usuários façam cadastro/login para
 
 ## Como rodar o projeto
 
-1. Clone o repositório ou baixe os arquivos.
+1. Acesse o link [aqui](https://gvmzin.github.io/qrcodejsbasic/) ou Clone o repositório ou baixe os arquivos.
 2. Abra o arquivo `index.html` (homepage), onde você poderá acessar a página de login ou cadastro.
 3. Faça seu cadastro ou login na página `login.html`.
 4. Após login, você será redirecionado para `app.html` para gerar QR Codes.
